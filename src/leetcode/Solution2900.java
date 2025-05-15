@@ -1,12 +1,27 @@
 package leetcode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Solution2900 {
-    // Great solution by ChatGPT at a Runtime of 1ms (96.15%)
+    // My solution at equal Runtime of 1ms
     public List<String> getLongestSubsequence(String[] words, int[] groups) {
+        List<String> result = new ArrayList<>(words.length);
+        int group = groups[0]; // starting at 0 will always result in the longest subsequence
+        for (int i = 0; i < words.length; i++) {
+            // every time the bit in group changes, you add the corresponding word to the result list
+            if (groups[i] == group) {
+                group = group ^ 1; // fastest way to alternate between 0 and 1
+                result.add(words[i]);
+            }
+        }
+        return result;
+    }
+
+    // Great solution by ChatGPT at a Runtime of 1ms (96.15%)
+    public List<String> getLongestSubsequence0(String[] words, int[] groups) {
         int n = words.length;
         // dp[i] stores the length of the longest alternating subsequence ending at i
         int[] dp = new int[n];
